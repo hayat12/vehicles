@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="filter-section">
+    <div class="search-container">
+      <div class="search-box">
+        <input class="search-input" minlength="1" [value]="getSearch" type="text" placeholder="Search Vehicles"
+          (input)="search($event)" (keydown.enter)="onSearch()" /> &nbsp;
+        <button class="search-btn" (click)="onSearch()">Search</button>
+      </div>
+    </div>
+    <hr class="divider">
+
+    <ng-template #modalTemplate>
+      <dkv-add-vehicle />
+    </ng-template>
+
+
+    <div class="sort-section">
+      <div class="total-result">
+        <!-- <p *ngIf="filters | async as f"></p> -->
+        <!-- <p>Total Results: - {{totalVehicles}} -</p> -->
+      </div>
+      <div class="sort-by">
+        <div *ngIf="sortList$ | async as sortList">
+          <span class="sort-label">Sort By:&nbsp;&nbsp;</span>
+          <ng-container *ngFor="let item of sortList">
+            <button class="sort-btn sort-select" [ngClass]="{'active': getSortBy === item.value}"
+              (click)="sortVehicles(item.value)">{{item.label}}</button>&nbsp;
+          </ng-container>
+        </div>
+        <div class="custom-divider"></div>
+        <div>
+          <button class="add-new" (click)="onNew()">Create New</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error$ | async as error">{{error | json }}</div>
+  <div *ngIf="loading$ |async">Loading ...</div>
+  <ng-container *ngIf="(vehicles$ | async) as vehicles;">
+    @if(vehicles.length > 0){
+    <div class="grid">
+      <div *ngFor="let vehicle of vehicles">
+        <dkv-vehicle [vehicle]="vehicle" />
+      </div>
+    </div>
+    <dkv-pagination [limit]="limit" (onChanges)="navigateToPage($event)" [totalVehicles]="vehicles.length"
+      [page]="currentPage" />
+    } @else {
+    <dkv-no-vehicle />
+    }
+  </ng-container>
+</div>

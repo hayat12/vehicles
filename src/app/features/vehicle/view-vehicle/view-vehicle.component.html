@@ -1,0 +1,29 @@
+<div class="container">
+  <span *ngIf="loading$ | async">Loading ...</span>
+  <ng-container *ngIf="(vehicle$ | async) as vehicle; else noVehicle">
+    <div class="vehicle">
+      <div class="vehicle-body">
+        <div class="vehicle-name">
+          <h2 class="car-title">{{vehicle.name}}</h2>
+          <p class="car-manufacturer">{{vehicle.manufacturer}}</p>
+          <small>{{vehicle.fuel}}</small>
+        </div>
+        <div class="vehicle-image">
+          <img src="images/car.jpeg" alt="car">
+        </div>
+      </div>
+      <div class="vehicle-footer">
+        <p class="car-model">{{vehicle.model}}</p>
+        <p class="car-type">{{vehicle.type}}</p>
+        <p class="car-type">{{vehicle.vin}}</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noVehicle>
+    <dkv-no-vehicle message="Vehicle not found!" />
+  </ng-template>
+
+  <br>
+
+  <button (click)="onBack()" class="back-btn">Back</button>
+</div>

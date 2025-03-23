@@ -1,0 +1,19 @@
+@mixin shared-styles {
+  border: 1px solid $primaryColor;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px #0000001a;
+}
+
+// @mixin shared-button-style {
+//   border: 1px solid $primaryColor;
+//   border-radius: 4px;
+//   color: white;
+// }
+
+@mixin btn-shared-style {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  color: $primaryColor;
+  border: 1px solid $primaryColor;
+}

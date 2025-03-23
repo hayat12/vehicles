@@ -1,0 +1,55 @@
+<div class="container-fluid">
+
+  <h3>Add new Vehicle</h3>
+  <hr>
+
+  <div *ngIf="error$ | async as error">{{error | json}}</div>
+  <div *ngIf="loading$ | async">Loading ...</div>
+
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name<span class="required-input">*</span></label>
+      <input placeholder="Name" class="form-input" formControlName="name" />
+      <dkv-form-validation-error [control]="form.get('name')" [customErrors]="{ required: 'Name is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="manufacturer">Manufacturer<span class="required-input">*</span></label>
+      <input placeholder="Manufacturer" class="form-input" formControlName="manufacturer" />
+      <dkv-form-validation-error [control]="form.get('manufacturer')"
+        [customErrors]="{ required: 'Manufacturer is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="model">Model<span class="required-input">*</span></label>
+      <input placeholder="model" class="form-input" formControlName="model" />
+      <dkv-form-validation-error [control]="form.get('model')" [customErrors]="{ required: 'Model is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="fuel">Fuel<span class="required-input">*</span></label>
+      <input placeholder="Fuel" class="form-input" formControlName="fuel" />
+      <dkv-form-validation-error [control]="form.get('fuel')" [customErrors]="{ required: 'Fuel is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="type">Type<span class="required-input">*</span></label>
+      <input placeholder="Type" class="form-input" formControlName="type" />
+      <dkv-form-validation-error [control]="form.get('type')" [customErrors]="{ required: 'Type is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="vin">Vin<span class="required-input">*</span></label>
+      <input placeholder="Vin" class="form-input" formControlName="vin" />
+      <dkv-form-validation-error [control]="form.get('vin')" [customErrors]="{ required: 'Vin is required.' }" />
+    </div>
+    <div class="form-group">
+      <label for="color">Color</label>
+      <input placeholder="Color" class="form-input" formControlName="color" />
+    </div>
+    <div class="form-group">
+      <label for="mileage">Mileage</label>
+      <input placeholder="Mileage" class="form-input" formControlName="mileage" />
+    </div>
+    <div class="form-footer">
+      <button class="back-btn" (click)="onBack()" type="button">Back</button>
+      <button class="submit-btn" type="submit">Submit</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,132 @@
+@import "../../../shared/styles/variables.scss";
+@import "../../../shared/styles/shared-style.scss";
+
+.grid {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  width: 100%;
+}
+
+.divider {
+  @include shared-styles
+}
+
+.filter-section {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 1rem;
+
+  @mixin outer-box-width {
+    width: 20%;
+    box-sizing: border-box;
+
+    @media (max-width: 790px) {
+      width: 60%;
+    }
+
+    @media (max-width: 535px) {
+      width: 100%;
+    }
+  }
+
+  .search-container {
+    width: 100%;
+    text-align: end;
+    align-content: end;
+
+    & .search-box {
+      border: 1px solid $primaryColor;
+      border-radius: 4px;
+      padding: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: max-content;
+      @include outer-box-width;
+      float: right;
+
+      &:focus-within {
+        width: 100%;
+        transition: width 0.3s ease;
+      }
+
+      & .search-input {
+        height: 35px;
+        width: 100%;
+        padding: 4px 16px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+
+        @media (max-width: 600px) {
+          width: 80%;
+        }
+
+        transition: width 0.3s ease;
+
+        & :focus {
+          width: 100% !important;
+        }
+
+        & :valid {
+          width: 100% !important;
+        }
+      }
+    }
+  }
+
+  .search-btn {
+    padding: 8px;
+    @include shared-styles;
+    @include btn-shared-style;
+    color: white;
+    border: none;
+    background: $primaryColor;
+    box-shadow: none;
+    cursor: pointer;
+  }
+
+  .sort-section {
+    background-color: $primaryColor;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 4px 16px;
+    @include shared-styles;
+
+    & .sort-by {
+      display: flex;
+    }
+
+    & .custom-divider {
+      margin: 0px 16px;
+      height: 30px;
+      width: 1px;
+      background-color: white;
+    }
+
+    & .add-new {
+      @include btn-shared-style;
+      background: #014678;
+      border: #014678;
+      color: white;
+    }
+
+    & .sort-label {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    & .sort-btn {
+      @include btn-shared-style;
+
+      &.active {
+        background-color: #a66920;
+        border: #a66920;
+        color: white;
+      }
+    }
+  }
+}

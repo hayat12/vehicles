@@ -1,13 +1,12 @@
-<div class="container-fluid">
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-dialog-actions align="center">
+    Add new vehicle
+  </mat-dialog-actions>
+  <mat-dialog-content class="scrollable-content">
+    <div *ngIf="error$ | async as error">{{error | json}}</div>
+    <div *ngIf="loading$ | async">Loading ...</div>
 
-  <h3>Add new Vehicle</h3>
-  <hr>
 
-  <div *ngIf="error$ | async as error">{{error | json}}</div>
-  <div *ngIf="loading$ | async">Loading ...</div>
-
-
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="name">Name<span class="required-input">*</span></label>
       <input placeholder="Name" class="form-input" formControlName="name" />
@@ -47,9 +46,12 @@
       <label for="mileage">Mileage</label>
       <input placeholder="Mileage" class="form-input" formControlName="mileage" />
     </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
     <div class="form-footer">
-      <button class="back-btn" (click)="onBack()" type="button">Back</button>
+      <button class="back-btn" type="button" (click)="close()">Close</button>
       <button class="submit-btn" type="submit">Submit</button>
     </div>
-  </form>
-</div>
+  </mat-dialog-actions>
+</form>

@@ -28,10 +28,7 @@ export const vehicleEffect = {
   ) => actions$.pipe(
     ofType(vehicleActions.create),
     exhaustMap((action) => vehicleService.create_vehicle(action.payload).pipe(
-      map((vehicle) => {
-        router.navigate(['../list'], { relativeTo: route })
-        return vehicleActions.createSuccessful({ payload: vehicle })
-      }),
+      map((vehicle) => vehicleActions.createSuccessful({ payload: vehicle })),
       catchError((error) => of(vehicleActions.fetchFailure({ error: error.message })))
     ))
   ), { functional: true, dispatch: true }),

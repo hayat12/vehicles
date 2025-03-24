@@ -15,6 +15,11 @@
 
 }
 
+.scrollable-content {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;

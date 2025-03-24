@@ -6,14 +6,16 @@ import { SubmissionDataInterface } from './submission-data.interface';
 import { Observable } from 'rxjs';
 import { FormValidationErrorComponent } from '../../../shared/components/form-validation-error';
 import { Store } from '@ngrx/store';
-import { selectData, selectError, selectLoading, VehicleState } from '../../state/vehicle.feature';
+import { selectError, selectLoading, VehicleState } from '../../state/vehicle.feature';
 import { vehicleActions } from '../../state/vehicle.action';
-import { Vehicle } from '../types/vehicle.interface';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'dkv-add-vehicle',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, FormValidationErrorComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, FormValidationErrorComponent, MatDialogModule, MatButtonModule],
   templateUrl: './add-vehicle.component.html',
   styleUrl: './add-vehicle.component.scss'
 })
@@ -34,6 +36,7 @@ export class AddVehicleComponent {
   error$!: Observable<string | null>;
   loading$!: Observable<boolean>
   constructor(
+    public dialogRef: MatDialogRef<AddVehicleComponent>,
     private router: Router,
     private store: Store<{ vehicle: VehicleState }>,
     private route: ActivatedRoute) { }
@@ -57,9 +60,18 @@ export class AddVehicleComponent {
     this.store.dispatch(vehicleActions.create({ payload }));
     this.error$ = this.store.select(selectError);
     this.loading$ = this.store.select(selectLoading);
+    this.error$.subscribe(
+      {
+        next: (err) => {
+          if (!err) {
+            this.dialogRef.close();
+          }
+        }
+      }
+    );
   }
 
-  onBack() {
-    this.router.navigate(['../list'], { relativeTo: this.route })
+  close() {
+    this.dialogRef.close();
   }
 }

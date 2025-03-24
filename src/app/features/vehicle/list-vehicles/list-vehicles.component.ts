@@ -7,17 +7,17 @@ import { VehicleComponent } from './item/vehicle.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaginationComponent } from '../../../shared/components/pagination.component';
 import { AppConstants } from '../../../shared/constants/app-constants';
-import { ModalService } from '../../../shared/services/modal.service';
 import { AddVehicleComponent } from '../add-vehicle/add-vehicle.component';
 import { Store } from '@ngrx/store';
 import { vehicleActions } from '../../state/vehicle.action';
 import { selectData, selectError, selectLoading, selectTotalCount } from '../../state/vehicle.feature';
 import { OrderTypes, SortDirection } from '../../../shared/enums/sort-direction.enum';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'dkv-list-vehicles',
   standalone: true,
-  imports: [CommonModule, NoVehicleComponent, VehicleComponent, PaginationComponent, AddVehicleComponent],
+  imports: [CommonModule, MatDialogModule, NoVehicleComponent, VehicleComponent, PaginationComponent, AddVehicleComponent],
   templateUrl: './list-vehicles.component.html',
   styleUrl: './list-vehicles.component.scss',
 })
@@ -37,10 +37,10 @@ export class ListVehiclesComponent implements OnInit {
   ]);
 
   constructor(
+    private dialog: MatDialog,
     private store: Store<{ vehicle: ValidityState }>,
     private router: Router,
-    private route: ActivatedRoute,
-    private modalService: ModalService) { }
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((queryParams) => {
@@ -100,15 +100,9 @@ export class ListVehiclesComponent implements OnInit {
   }
 
   onNew() {
-    this.router.navigate(['dkv/vehicle/create']);
-  }
-
-  openModal(modalTemplate: TemplateRef<any>) {
-    this.modalService
-      .open(modalTemplate, { size: 'lg', title: 'Insert a new vehicle' })
-      .subscribe((action) => {
-        console.log('modalAction', action);
-      });
+    this.dialog.open(AddVehicleComponent, {
+      width: '60%'
+    });
   }
 
   onOrderBy(): void {

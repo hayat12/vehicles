@@ -92,13 +92,14 @@
   }
 
   .sort-section {
+    @include shared-styles;
+    border-radius: 0px !important;
     background-color: $primaryColor;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
     padding: 4px 16px;
-    @include shared-styles;
 
     & .sort-by {
       display: flex;

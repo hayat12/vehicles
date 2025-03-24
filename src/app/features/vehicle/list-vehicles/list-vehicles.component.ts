@@ -105,7 +105,7 @@ export class ListVehiclesComponent implements OnInit {
 
   openModal(modalTemplate: TemplateRef<any>) {
     this.modalService
-      .open(modalTemplate, { size: 'lg', title: 'Foo' })
+      .open(modalTemplate, { size: 'lg', title: 'Insert a new vehicle' })
       .subscribe((action) => {
         console.log('modalAction', action);
       });

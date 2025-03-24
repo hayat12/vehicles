@@ -89,7 +89,7 @@ export class ListVehiclesComponent implements OnInit {
     return this.getParams['sortBy'];
   }
   get getOrder(): SortDirection {
-    return this.getParams['order'];
+    return this.getParams['order'] ?? 'desc';
   }
   get getSearch(): string {
     return this.getParams['search'] || "";

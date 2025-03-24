@@ -15,13 +15,20 @@
 
 
     <div class="sort-section">
+      <span class="label">Order By Name
+        <button class="order-by-btn" (click)="onOrderBy()">
+          <span [ngClass]="{'active-arrow':getOrder=='asc'}">↑</span>
+          <span [ngClass]="{'active-arrow':getOrder=='desc'}">↓</span>
+        </button>
+      </span>
       <div class="total-result">
-        <!-- <p *ngIf="filters | async as f"></p> -->
-        <!-- <p>Total Results: - {{totalVehicles}} -</p> -->
+
+        <span class="label">Total Results: - {{totalCount$ | async}} -</span>
+
       </div>
       <div class="sort-by">
         <div *ngIf="sortList$ | async as sortList">
-          <span class="sort-label">Sort By:&nbsp;&nbsp;</span>
+          <span class="sort-label" class="label">Sort By:&nbsp;&nbsp;</span>
           <ng-container *ngFor="let item of sortList">
             <button class="sort-btn sort-select" [ngClass]="{'active': getSortBy === item.value}"
               (click)="sortVehicles(item.value)">{{item.label}}</button>&nbsp;
@@ -47,7 +54,7 @@
     <dkv-pagination [limit]="limit" (onChanges)="navigateToPage($event)" [totalVehicles]="vehicles.length"
       [page]="currentPage" />
     } @else {
-    <dkv-no-vehicle />
+    <dkv-no-vehicle *ngIf="!(loading$ |async)" />
     }
   </ng-container>
 </div>

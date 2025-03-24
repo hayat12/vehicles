@@ -12,6 +12,10 @@
   @include shared-styles
 }
 
+.label {
+  @include label-shared-style;
+}
+
 .filter-section {
   width: 100%;
   display: inline-block;
@@ -126,6 +130,16 @@
         background-color: #a66920;
         border: #a66920;
         color: white;
+      }
+    }
+
+    & .order-by-btn {
+      @include btn-shared-style;
+      background: transparent !important;
+      color: white;
+
+      & .active-arrow {
+        color: $dark-color;
       }
     }
   }

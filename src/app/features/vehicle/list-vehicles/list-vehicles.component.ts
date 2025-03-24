@@ -11,7 +11,8 @@ import { ModalService } from '../../../shared/services/modal.service';
 import { AddVehicleComponent } from '../add-vehicle/add-vehicle.component';
 import { Store } from '@ngrx/store';
 import { vehicleActions } from '../../state/vehicle.action';
-import { selectData, selectError, selectLoading } from '../../state/vehicle.feature';
+import { selectData, selectError, selectLoading, selectTotalCount } from '../../state/vehicle.feature';
+import { OrderTypes, SortDirection } from '../../../shared/enums/sort-direction.enum';
 
 @Component({
   selector: 'dkv-list-vehicles',
@@ -24,10 +25,13 @@ export class ListVehiclesComponent implements OnInit {
   vehicles$!: Observable<Vehicle[]>;
   error$!: Observable<string | null>;
   loading$!: Observable<boolean>;
+  totalCount$: Observable<number> = of(0);
+
+  // orderByName: SortDirection = SortDirection.DESC;
+  defaultOrderBy: OrderTypes = "title";
 
   readonly limit: number = AppConstants.PAGE_LIMIT;
   sortList$ = of([
-    { value: 'name', label: 'Name' },
     { value: 'model', label: 'Model' },
     { value: 'manufacturer', label: 'Manufacturer' }
   ]);
@@ -46,6 +50,7 @@ export class ListVehiclesComponent implements OnInit {
     this.loading$ = this.store.select(selectLoading);
     this.error$ = this.store.select(selectError);
     this.vehicles$ = this.store.select(selectData);
+    this.totalCount$ = this.store.select(selectTotalCount);
   }
 
 
@@ -83,6 +88,9 @@ export class ListVehiclesComponent implements OnInit {
   get getSortBy(): string {
     return this.getParams['sortBy'];
   }
+  get getOrder(): SortDirection {
+    return this.getParams['order'];
+  }
   get getSearch(): string {
     return this.getParams['search'] || "";
   }
@@ -103,4 +111,11 @@ export class ListVehiclesComponent implements OnInit {
       });
   }
 
+  onOrderBy(): void {
+    const order = this.getOrder === SortDirection.DESC ? SortDirection.ASC : this.getOrder == SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC;
+    this.updateQueryParams({
+      orderby: this.defaultOrderBy,
+      order: order
+    })
+  }
 }

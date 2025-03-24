@@ -17,6 +17,9 @@ export class VehicleService {
     if (!params['page']) {
       params = { ...params, page: 1, limit: AppConstants.PAGE_LIMIT }
     }
+    if (!params['order'] || !params['orderby']) {
+      params = { ...params, order: "desc", orderby: 'name' }
+    }
     return this.http.get<Vehicle[]>(`${this.basedUrl}/vehicles`, { params });
   }
 

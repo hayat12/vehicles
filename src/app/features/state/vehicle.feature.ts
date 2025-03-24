@@ -6,13 +6,15 @@ export interface VehicleState {
   loading: boolean;
   data: Vehicle[],
   error: string | null;
-  selected: Vehicle | null
+  selected: Vehicle | null,
+  totalCount: number
 }
 const initialState: VehicleState = {
   loading: true,
   data: [],
   error: null,
-  selected: null
+  selected: null,
+  totalCount: 0
 }
 const vehicleFeatures = createFeature(
   {
@@ -21,8 +23,8 @@ const vehicleFeatures = createFeature(
       initialState,
 
       on(vehicleActions.fetchAll, (state) => ({ ...state, loading: true, error: '' })),
-      on(vehicleActions.fetchSuccessful, (state, action) => ({ ...state, data: action.payload, loading: false })),
-      on(vehicleActions.fetchFailure, (state, action) => ({ ...state, loading: false, error: action.error })),
+      on(vehicleActions.fetchSuccessful, (state, action) => ({ ...state, data: action.payload, loading: false, totalCount: action.payload.length })),
+      on(vehicleActions.fetchFailure, (state, action) => ({ ...state, loading: false, error: action.error, totalCount: state.data.length })),
 
       on(vehicleActions.create, (state) => ({ ...state, loading: true, error: '' })),
       on(vehicleActions.createSuccessful, (state, action) => ({
@@ -35,10 +37,8 @@ const vehicleFeatures = createFeature(
       on(vehicleActions.view, (state) => ({ ...state, loading: true, error: '' })),
       on(vehicleActions.viewSuccessful, (state, action) => ({ ...state, selected: action.payload, loading: false })),
       on(vehicleActions.fetchFailure, (state, action) => ({ ...state, loading: false, error: action.error })),
-
-
     )
   }
 );
 
-export const { name: vehicleKeyFeature, reducer: vehicleReducer, selectData, selectError, selectLoading, selectSelected } = vehicleFeatures;
+export const { name: vehicleKeyFeature, reducer: vehicleReducer, selectData, selectError, selectLoading, selectSelected, selectTotalCount } = vehicleFeatures;

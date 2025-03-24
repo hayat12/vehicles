@@ -18,6 +18,8 @@ export const vehicleActions = createActionGroup(
       view: props<{ payload: Vehicle['id'] }>(),
       'view successful': props<{ payload: Vehicle }>(),
       'view failure': props<{ error: string }>(),
+
+      get_totalCount: emptyProps()
     }
   }
 )

@@ -1,10 +1,23 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
+import { provideState } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+import { vehicleReducer } from '../state/vehicle.feature';
+import { vehicleEffect } from '../state/vehicle.effect';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    providers: [
+      provideState(
+        {
+          name: 'vehicle',
+          reducer: vehicleReducer
+        }
+      ),
+      provideEffects(vehicleEffect)
+    ],
     children: [
       {
         path: 'list',

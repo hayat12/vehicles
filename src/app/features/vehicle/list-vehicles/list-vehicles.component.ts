@@ -28,7 +28,7 @@ export class ListVehiclesComponent implements OnInit {
   totalCount$: Observable<number> = of(0);
 
   // orderByName: SortDirection = SortDirection.DESC;
-  defaultOrderBy: OrderTypes = "title";
+  defaultOrderBy: OrderTypes = "name";
 
   readonly limit: number = AppConstants.PAGE_LIMIT;
   sortList$ = of([
